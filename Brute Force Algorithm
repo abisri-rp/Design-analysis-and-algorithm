@@ -1,0 +1,322 @@
+1.Bubble Sort using Brute Force
+
+#include<iostream>
+using namespace std;
+int main()
+{
+   int n,temp;
+   cout<<"Enter no of elements:";
+   cin>>n;
+   int a[n];
+   cout<<"Enter elements:"<<endl;
+   for(int i=0;i<n;i++)
+   {
+        cin>>a[i];
+   }
+   for(int i=0;i<n-1;i++)
+   {
+      bool flag=false;
+      for(int j=0;j<n-1-i;j++)
+      {
+         if(a[j]>a[j+1])
+         {
+            temp=a[j];
+            a[j]=a[j+1];
+            a[j+1]=temp;
+            flag=true;
+         }
+      }
+      if(!flag)
+      {
+         break;
+      }
+   }
+   cout<<"After sorting with bubble sort:";
+   for(int i=0;i<n;i++)
+   {
+      cout<<a[i]<<" ";
+   }
+   cout<<"\n";
+   return 0;
+}
+
+Output:
+
+Enter no of elements:7
+Enter elements:
+23
+98
+56
+3
+7
+5
+4
+After sorting with bubble sort:3 4 5 7 23 56 98 
+
+2. Selection Sort using Brute Force
+
+#include<iostream>
+using namespace std;
+int main()
+{
+   int temp,min,n;
+   cout<<"Enter no of elements:";
+   cin>>n;
+   int a[n];
+   cout<<"Enter elements:";
+   for(int i=0;i<n;i++)
+   {
+      cin>>a[i];
+   }
+   for(int i=0;i<n-1;i++)
+   {
+      min=i;
+      for(int j=i+1;j<n;j++)
+      {
+	 if(a[j]<a[min])
+	 {
+	    min=j;
+	 }
+      }
+      temp=a[i];
+      a[i]=a[min];
+      a[min]=temp;
+   }
+   cout<<"After sorting:";
+   for(int i=0;i<n;i++)
+   {
+      cout<<a[i]<<"\t";
+   }
+   cout<<"\n";
+   return 0;
+}
+
+Output:
+
+Enter no of elements:5
+Enter elements:
+67
+90
+34
+3
+7
+After sorting:3	  7  34  67  90	
+
+3. Closest Pair Problem using Brute Force
+
+#include<iostream>
+#include<cmath>
+#include<cfloat>
+using namespace std;
+int main()
+{
+   int n;
+   cout<<"Enter no of points:";
+   cin>>n;
+   int x[n],y[n];
+   for(int i=1;i<=n;i++)
+   {
+      cout<<"Enter x-coordinate of point "<<i<<" is";
+      cin>>x[i];
+      cout<<"Enter y-coordinate of point "<<i<<" is";
+      cin>>y[i];
+   }
+   float d=FLT_MAX;
+   int p1=0,p2=0;
+   cout<<"\n All pairs and distances \n";
+   for(int i=1;i<=n-1;i++)
+   {
+      for(int j=i+1;j<=n;j++)
+      {
+	 double dist=sqrt(pow((x[i]-x[j]),2)+pow((y[i]-y[j]),2));
+	 cout<<"Pair:("<<x[i]<<","<<y[i]<<") and ("<<x[j]<<","<<y[j]<<")\t";
+	 cout<<"Distance="<<dist<<endl;
+	 if(dist<d)
+	 {
+	    d=dist;
+	    p1=i;
+	    p2=j;
+	 }
+      }
+   }
+   cout<<"\n Closest pair "<<endl;
+   cout<<"Closest pair:("<<x[p1]<<","<<y[p1]<<") and ("<<x[p2]<<","<<y[p2]<<")\n";
+   cout<<"Minimum distance="<<d<<endl;
+   return 0;
+}
+
+Output:
+
+Enter no of points:11
+Enter x-coordinate of point 1 is 1
+Enter y-coordinate of point 1 is 2
+Enter x-coordinate of point 2 is 2
+Enter y-coordinate of point 2 is 3
+Enter x-coordinate of point 3 is 3
+Enter y-coordinate of point 3 is 4
+Enter x-coordinate of point 4 is 4
+Enter y-coordinate of point 4 is 5
+Enter x-coordinate of point 5 is 5
+Enter y-coordinate of point 5 is 6
+Enter x-coordinate of point 6 is 6
+Enter y-coordinate of point 6 is 7
+Enter x-coordinate of point 7 is 7
+Enter y-coordinate of point 7 is 8
+Enter x-coordinate of point 8 is 8
+Enter y-coordinate of point 8 is 9
+Enter x-coordinate of point 9 is 9
+Enter y-coordinate of point 9 is 0
+Enter x-coordinate of point 10 is 6
+Enter y-coordinate of point 10 is 5
+Enter x-coordinate of point 11 is 9
+Enter y-coordinate of point 11 is 3
+
+ All pairs and distances 
+Pair:(1,2) and (2,3)	Distance=1.41421
+Pair:(1,2) and (3,4)	Distance=2.82843
+Pair:(1,2) and (4,5)	Distance=4.24264
+Pair:(1,2) and (5,6)	Distance=5.65685
+Pair:(1,2) and (6,7)	Distance=7.07107
+Pair:(1,2) and (7,8)	Distance=8.48528
+Pair:(1,2) and (8,9)	Distance=9.89949
+Pair:(1,2) and (9,0)	Distance=8.24621
+Pair:(1,2) and (6,5)	Distance=5.83095
+Pair:(1,2) and (9,3)	Distance=8.06226
+Pair:(2,3) and (3,4)	Distance=1.41421
+Pair:(2,3) and (4,5)	Distance=2.82843
+Pair:(2,3) and (5,6)	Distance=4.24264
+Pair:(2,3) and (6,7)	Distance=5.65685
+Pair:(2,3) and (7,8)	Distance=7.07107
+Pair:(2,3) and (8,9)	Distance=8.48528
+Pair:(2,3) and (9,0)	Distance=7.61577
+Pair:(2,3) and (6,5)	Distance=4.47214
+Pair:(2,3) and (9,3)	Distance=7
+Pair:(3,4) and (4,5)	Distance=1.41421
+Pair:(3,4) and (5,6)	Distance=2.82843
+Pair:(3,4) and (6,7)	Distance=4.24264
+Pair:(3,4) and (7,8)	Distance=5.65685
+Pair:(3,4) and (8,9)	Distance=7.07107
+Pair:(3,4) and (9,0)	Distance=7.2111
+Pair:(3,4) and (6,5)	Distance=3.16228
+Pair:(3,4) and (9,3)	Distance=6.08276
+Pair:(4,5) and (5,6)	Distance=1.41421
+Pair:(4,5) and (6,7)	Distance=2.82843
+Pair:(4,5) and (7,8)	Distance=4.24264
+Pair:(4,5) and (8,9)	Distance=5.65685
+Pair:(4,5) and (9,0)	Distance=7.07107
+Pair:(4,5) and (6,5)	Distance=2
+Pair:(4,5) and (9,3)	Distance=5.38516
+Pair:(5,6) and (6,7)	Distance=1.41421
+Pair:(5,6) and (7,8)	Distance=2.82843
+Pair:(5,6) and (8,9)	Distance=4.24264
+Pair:(5,6) and (9,0)	Distance=7.2111
+Pair:(5,6) and (6,5)	Distance=1.41421
+Pair:(5,6) and (9,3)	Distance=5
+Pair:(6,7) and (7,8)	Distance=1.41421
+Pair:(6,7) and (8,9)	Distance=2.82843
+Pair:(6,7) and (9,0)	Distance=7.61577
+Pair:(6,7) and (6,5)	Distance=2
+Pair:(6,7) and (9,3)	Distance=5
+Pair:(7,8) and (8,9)	Distance=1.41421
+Pair:(7,8) and (9,0)	Distance=8.24621
+Pair:(7,8) and (6,5)	Distance=3.16228
+Pair:(7,8) and (9,3)	Distance=5.38516
+Pair:(8,9) and (9,0)	Distance=9.05539
+Pair:(8,9) and (6,5)	Distance=4.47214
+Pair:(8,9) and (9,3)	Distance=6.08276
+Pair:(9,0) and (6,5)	Distance=5.83095
+Pair:(9,0) and (9,3)	Distance=3
+Pair:(6,5) and (9,3)	Distance=3.60555
+
+ Closest pair 
+Closest pair:(1,2) and (2,3)
+Minimum distance=1.41421
+
+4. String searching using Brute Force
+
+#include<iostream>
+#include<string>
+using namespace std;
+int getLength(string s)
+{
+   int count=0;
+   while(s[count]!='\0')
+   {
+      count++;
+   }
+   return count;
+}
+void search(string text,string pattern)
+{
+   int n=getLength(text);
+   int m=getLength(pattern);
+   bool found=false;
+   for(int i=0;i<=n-m;i++)
+   {
+      int j;
+      for(j=0;j<m;j++)
+      {
+	 if(text[i+j]!=pattern[j])
+	    break;
+      }
+      if(j==m)
+      {
+	 cout<<"Pattern found at index:"<<i<<endl;
+	 found=true;
+	 cout<<text<<endl;
+	 for(int row=0;row<i+1;row++)
+	 {
+	    for(int space=0;space<row;space++)
+	    {
+	       cout<<" ";
+	    }
+	    cout<<pattern<<"\n";
+	 }
+      }
+   }
+   if(!found)
+      cout<<"Pattern not found"<<endl;
+}
+int main()
+{
+    string text,pattern;
+    cout<<"Enter text:";
+    getline(cin,text);
+    cout<<"Enter pattern:";
+    getline(cin,pattern);
+    search(text,pattern);
+    return 0;
+}
+
+Output: 
+
+Enter text:A WORLD IS BEAUTIFUL IN SUNLIGHT
+Enter pattern:FUL
+Pattern found at index:17
+A WORLD IS BEAUTIFUL IN SUNLIGHT
+FUL
+ FUL
+  FUL
+   FUL
+    FUL
+     FUL
+      FUL
+       FUL
+        FUL
+         FUL
+          FUL
+           FUL
+            FUL
+             FUL
+              FUL
+               FUL
+                FUL
+                 FUL
+
+
+Enter text:A WORLD IS BEAUTIFUL 
+Enter pattern:BREEZE
+Pattern not found
+
+
+

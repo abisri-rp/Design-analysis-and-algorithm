@@ -1,0 +1,48 @@
+#include<iostream>
+using namespace std;
+int main()
+{
+   int v;
+   cout<<"Enter no of vertices:";
+   cin>>v;
+   int dist[10][10];
+   int inf=99999;
+   cout<<"Enter matrix:\n";
+   for(int i=0;i<v;i++)
+   {
+      for(int j=0;j<v;j++)
+      {
+         cin>>dist[i][j];
+      }
+   }
+   for(int k=0;k<v;k++)
+   {
+      for(int i=0;i<v;i++)
+      {
+         for(int j=0;j<v;j++)
+         {
+            if(dist[i][k]!=inf && dist[k][j]!=inf)
+            {
+               dist[i][j]=min(dist[i][j],dist[i][k]+dist[k][j]);
+            }
+         }
+      }
+   }
+   cout<<"Shortest path:\n";
+   for(int i=0;i<v;i++)
+   {
+      for(int j=0;j<v;j++)
+      {
+         if(dist[i][j]==inf)
+         {
+            cout<<"INF ";
+         }
+         else
+         {
+            cout<<dist[i][j]<<" ";
+         }
+      }
+      cout<<endl;
+   }
+   return 0;
+}

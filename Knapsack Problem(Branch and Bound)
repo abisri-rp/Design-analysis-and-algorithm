@@ -1,0 +1,138 @@
+#include <iostream>
+
+using namespace std;
+
+class Item {
+public:
+    int id; 
+    double weight;
+    int value;
+    double getRatio() { return (double)value / weight; }
+};
+
+class Node {
+public:
+    int level;
+    int profit;
+    double weight;
+    double bound;
+    bool selected[100]; 
+
+class KnapsackSolver {
+private:
+    Item* items;
+    int n;
+    int capacity;
+    int maxProfit;
+    bool bestSelected[100];
+
+    void sortItems() {
+        for (int i = 0; i < n - 1; i++) {
+            for (int j = 0; j < n - i - 1; j++) {
+                if (items[j].getRatio() < items[j + 1].getRatio()) {
+                    Item temp = items[j];
+                    items[j] = items[j + 1];
+                    items[j + 1] = temp;
+                }
+            }
+        }
+    }
+
+    double calculateBound(Node u) {
+        if (u.weight >= capacity) return 0;
+        double profit_bound = u.profit;
+        int j = u.level + 1;
+        double totweight = u.weight;
+
+        while (j < n && totweight + items[j].weight <= capacity) {
+            totweight += items[j].weight;
+            profit_bound += items[j].value;
+            j++;
+        }
+        if (j < n)
+            profit_bound += (capacity - totweight) * items[j].getRatio();
+        return profit_bound;
+    }
+
+public:
+    KnapsackSolver(int cap, int count) {
+        capacity = cap;
+        n = count;
+        maxProfit = 0;
+        items = new Item[n];
+        for (int i = 0; i < 100; i++) bestSelected[i] = false;
+    }
+
+    ~KnapsackSolver() { delete[] items; }
+
+    void setItem(int index, int id, int v, double w) {
+        items[index].id = id;
+        items[index].value = v;
+        items[index].weight = w;
+    }
+
+    void solve() {
+        sortItems();
+        Node* queue = new Node[2000];
+        int front = 0, back = 0;
+
+        Node u, v;
+        u.level = -1; u.profit = 0; u.weight = 0;
+        for (int i = 0; i < n; i++) u.selected[i] = false;
+        queue[back++] = u;
+
+        while (front < back) {
+            u = queue[front++];
+            if (u.level == n - 1) continue;
+
+            v.level = u.level + 1;
+
+   
+            v.weight = u.weight + items[v.level].weight;
+            v.profit = u.profit + items[v.level].value;
+            // Copy previous selections and mark this one true
+            for (int i = 0; i < n; i++) v.selected[i] = u.selected[i];
+            v.selected[v.level] = true;
+
+            if (v.weight <= capacity && v.profit > maxProfit) {
+                maxProfit = v.profit;
+                for (int i = 0; i < n; i++) bestSelected[i] = v.selected[i];
+            }
+
+            v.bound = calculateBound(v);
+            if (v.bound > maxProfit) queue[back++] = v;
+            v.weight = u.weight;
+            v.profit = u.profit;
+            v.selected[v.level] = false; 
+            v.bound = calculateBound(v);
+            if (v.bound > maxProfit) queue[back++] = v;
+        }
+
+        cout << "\n--- Result ---" << endl;
+        cout << "Maximum Profit: " << maxProfit << endl;
+        cout << "Items Included (ID, Value, Weight):" << endl;
+        for (int i = 0; i < n; i++) {
+            if (bestSelected[i]) {
+                cout << "Item " << items[i].id << ": (" << items[i].value << ", " << items[i].weight << ")" << endl;
+            }
+        }
+        delete[] queue;
+    }
+};
+
+int main() {
+    int n, cap;
+    cout << "Enter number of items: "; cin >> n;
+    cout << "Enter knapsack capacity: "; cin >> cap;
+
+    KnapsackSolver solver(cap, n);
+    for (int i = 0; i < n; i++) {
+        int v; double w;
+        cout << "Item " << i + 1 << " Value & Weight: ";
+        cin >> v >> w;
+        solver.setItem(i, i + 1, v, w);
+    }
+
+    solver.solve();
+    return 0;
+}
